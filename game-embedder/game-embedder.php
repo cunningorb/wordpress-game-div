@@ -6,6 +6,21 @@ Version: 1.0
 Author: cunningorb
 */
 
+// Activation hook to create the restricted directory
+register_activation_hook(__FILE__, 'custom_logged_in_check_activate');
+
+function custom_logged_in_check_activate() {
+    // Get the plugin directory path
+    $plugin_dir = plugin_dir_path(__FILE__);
+
+    // Create the restricted directory if it doesn't exist
+    $restricted_dir = $plugin_dir . 'restricted-content';
+
+    if (!is_dir($restricted_dir)) {
+        mkdir($restricted_dir, 0755, true);
+    }
+}
+
 // Add an options page to the WordPress admin menu
 function custom_logged_in_check_menu() {
     add_options_page(
